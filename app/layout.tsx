@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/Sidebar";
 import { Navbar } from "@/components/Navbar";
 import { WeatherProvider } from "@/context/WeatherContext";
 
@@ -22,12 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${hanken.variable} font-sans bg-surface text-on-surface min-h-screen flex overflow-hidden`}>
+      <body className={`${hanken.variable} font-sans bg-surface text-on-surface min-h-screen overflow-x-hidden`}>
         <WeatherProvider>
-          <Sidebar />
-          <div className="flex-1 flex flex-col h-screen overflow-y-auto custom-scrollbar">
+          <div className="flex flex-col min-h-screen">
             <Navbar />
-            {children}
+            <div className="flex-1">
+              {children}
+            </div>
           </div>
         </WeatherProvider>
       </body>

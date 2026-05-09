@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Search as SearchIcon } from "lucide-react";
+import { Search as SearchIcon, MapPin } from "lucide-react";
+
+const SUGGESTED_CITIES = ["Cairo", "London", "Dubai", "New York", "Tokyo"];
+
 
 interface SearchProps {
   onSearch: (city: string) => void;
@@ -33,6 +36,25 @@ export const Search: React.FC<SearchProps> = ({ onSearch, loading }) => {
           <div className="w-2 h-2 bg-accent rounded-full animate-ping" />
         </div>
       )}
+      
+      <div className="flex flex-wrap gap-2 mt-4 animate-in fade-in slide-in-from-top-2 duration-700 delay-300">
+        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-1 mr-1">
+          <MapPin size={12} /> Suggestions:
+        </span>
+        {SUGGESTED_CITIES.map(city => (
+          <button
+            key={city}
+            type="button"
+            onClick={() => {
+              setQuery(city);
+              onSearch(city);
+            }}
+            className="text-[10px] font-bold tracking-widest px-3 py-1.5 rounded-full border border-white/5 bg-white/5 hover:border-primary/50 hover:bg-primary/10 hover:text-primary transition-all text-slate-400 uppercase"
+          >
+            {city}
+          </button>
+        ))}
+      </div>
     </form>
   );
 };

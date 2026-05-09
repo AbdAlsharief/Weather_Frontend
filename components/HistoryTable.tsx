@@ -1,7 +1,9 @@
 "use client";
 
 import React from "react";
-import { Download, MoreVertical, MapPin } from "lucide-react";
+import { Download, MapPin, Trash2, Edit } from "lucide-react";
+import { useWeatherContext } from "@/context/WeatherContext";
+import { BASE_URL } from "@/lib/apiClient";
 import { WeatherReport } from "@/types/weather";
 
 interface HistoryTableProps {
@@ -9,21 +11,23 @@ interface HistoryTableProps {
 }
 
 export const HistoryTable = ({ history }: HistoryTableProps) => {
-  // Use mock history if empty for demonstration
-  const displayHistory = history.length > 0 ? history : [
-    { city: "San Francisco, CA", date: "2 mins ago", temp: 68 },
-    { city: "London, UK", date: "1 hour ago", temp: 54 },
-    { city: "Tokyo, JP", date: "3 hours ago", temp: 72 },
-  ];
+  const { deleteHistory, updateHistory } = useWeatherContext();
+
 
   return (
     <section className="space-y-6">
       <div className="flex justify-between items-end px-2">
         <h3 className="text-2xl font-bold text-on-surface">Your Search History</h3>
-        <button className="bg-surface-container-high hover:bg-surface-container-highest text-primary font-bold text-[10px] tracking-widest uppercase px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all border border-white/5 shadow-xl">
-          <Download size={14} />
-          Export Data
-        </button>
+        <div className="flex gap-2">
+          <a href={`${BASE_URL}/export/csv`} className="bg-surface-container-high hover:bg-surface-container-highest text-primary font-bold text-[10px] tracking-widest uppercase px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all border border-white/5 shadow-xl">
+            <Download size={14} />
+            CSV
+          </a>
+          <a href={`${BASE_URL}/export/json`} className="bg-surface-container-high hover:bg-surface-container-highest text-secondary font-bold text-[10px] tracking-widest uppercase px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all border border-white/5 shadow-xl">
+            <Download size={14} />
+            JSON
+          </a>
+        </div>
       </div>
       
       <div className="glass-card rounded-[2.5rem] overflow-hidden border border-white/5 shadow-2xl">
@@ -38,24 +42,52 @@ export const HistoryTable = ({ history }: HistoryTableProps) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-white/5">
-              {displayHistory.map((item: any, i: number) => (
-                <tr key={i} className="hover:bg-white/5 transition-colors group cursor-pointer">
+              {history.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className="p-12 text-center text-on-surface-variant/50 text-xs font-bold tracking-widest uppercase">
+                    No search history found. Start searching to build your records.
+                  </td>
+                </tr>
+              ) : (
+                history.map((item: any, i: number) => (
+                  <tr key={item.id || i} className="hover:bg-white/5 transition-colors group cursor-pointer">
                   <td className="p-6">
                     <div className="flex items-center gap-3">
                       <MapPin size={18} className="text-secondary/60" />
                       <span className="font-bold text-on-surface">{item.city || item.location}</span>
                     </div>
                   </td>
-                  <td className="p-6 text-on-surface-variant text-sm font-medium">{item.date || "Just now"}</td>
-                  <td className="p-6 text-secondary font-bold text-lg">{item.temp}°</td>
+                  <td className="p-6 text-on-surface-variant text-sm font-medium">{item.timestamp ? new Date(item.timestamp).toLocaleString() : "Just now"}</td>
+                  <td className="p-6 text-secondary font-bold text-lg">{item.temperature}°</td>
                   <td className="p-6 text-right">
-                    <button className="p-2 text-on-surface-variant hover:text-on-surface transition-colors">
-                      <MoreVertical size={18} />
-                    </button>
+                    <div className="flex justify-end gap-2">
+                      <button 
+                        onClick={() => {
+                          const newLoc = prompt("Enter new location:", item.city);
+                          if (newLoc) updateHistory(item.id, newLoc);
+                        }}
+                        className="p-2 text-on-surface-variant hover:text-primary transition-colors hover:bg-primary/10 rounded-lg"
+                        title="Edit Location"
+                      >
+                        <Edit size={16} />
+                      </button>
+                      <button 
+                        onClick={() => {
+                          if (confirm("Are you sure you want to delete this record?")) {
+                            deleteHistory(item.id);
+                          }
+                        }}
+                        className="p-2 text-on-surface-variant hover:text-red-400 transition-colors hover:bg-red-500/10 rounded-lg"
+                        title="Delete Record"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
-              ))}
-            </tbody>
+              ))
+            )}
+          </tbody>
           </table>
         </div>
       </div>

@@ -1,14 +1,26 @@
 import React from "react";
-import { Cloud, Sun, CloudRain, CloudSun, Wind } from "lucide-react";
+import { Cloud, Sun, CloudRain, CloudSun, Wind, CloudLightning, CloudFog } from "lucide-react";
+import { ForecastDay } from "@/types/weather";
 
-export const Forecast = () => {
-  const forecastDays = [
-    { day: "TUE", icon: <CloudSun className="text-primary" size={32} />, high: 72, low: 61, active: false },
-    { day: "WED", icon: <Sun className="text-secondary" size={32} />, high: 75, low: 63, active: false },
-    { day: "THU", icon: <Cloud className="text-primary" size={32} />, high: 69, low: 58, active: true },
-    { day: "FRI", icon: <CloudRain className="text-tertiary" size={32} />, high: 64, low: 55, active: false },
-    { day: "SAT", icon: <Sun className="text-secondary" size={32} />, high: 70, low: 59, active: false },
-  ];
+interface ForecastProps {
+  data: ForecastDay[];
+}
+
+const getIcon = (description: string) => {
+  const desc = description.toLowerCase();
+  if (desc.includes("clear")) return <Sun className="text-secondary" size={32} />;
+  if (desc.includes("rain") || desc.includes("drizzle")) return <CloudRain className="text-tertiary" size={32} />;
+  if (desc.includes("thunderstorm")) return <CloudLightning className="text-error" size={32} />;
+  if (desc.includes("cloud")) return <CloudSun className="text-primary" size={32} />;
+  if (desc.includes("fog") || desc.includes("mist")) return <CloudFog className="text-on-surface-variant" size={32} />;
+  return <Cloud className="text-on-surface-variant" size={32} />;
+};
+
+
+export const Forecast: React.FC<ForecastProps> = ({ data }) => {
+  if (!data || data.length === 0) return null;
+  const forecastDays = data;
+
 
   return (
     <section className="space-y-6">
@@ -21,15 +33,13 @@ export const Forecast = () => {
         {forecastDays.map((d, i) => (
           <div 
             key={i} 
-            className={`glass-card rounded-3xl p-6 flex flex-col items-center text-center space-y-4 hover:border-primary/40 hover:bg-white/5 transition-all cursor-pointer group shadow-lg ${
-              d.active ? 'border-primary/30 bg-primary/5 ring-1 ring-primary/20' : 'border-white/5'
-            }`}
+            className="glass-card rounded-3xl p-6 flex flex-col items-center text-center space-y-4 hover:border-primary/40 hover:bg-white/5 transition-all cursor-pointer group shadow-lg border-white/5"
           >
-            <span className={`text-[10px] font-bold tracking-widest uppercase ${d.active ? 'text-primary' : 'text-on-surface-variant'}`}>
+            <span className="text-[10px] font-bold tracking-widest uppercase text-on-surface-variant">
               {d.day}
             </span>
             <div className="group-hover:scale-110 transition-transform duration-300">
-              {d.icon}
+              {getIcon(d.description)}
             </div>
             <div className="space-y-0.5">
               <div className="text-xl font-bold text-on-surface">{d.high}°</div>

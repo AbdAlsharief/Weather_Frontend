@@ -7,7 +7,7 @@ export interface WeatherReport {
   humidity: number;
   wind_speed: number;
   timestamp: string;
-  
+
   // High-precision meteorological data
   precipitation?: string;
   uv_index?: number;
@@ -17,7 +17,7 @@ export interface WeatherReport {
   sunrise?: string;
   sunset?: string;
   wind_direction?: string;
-  
+
   // Forecast data (simplified for now)
   forecast?: ForecastDay[];
 }
@@ -28,19 +28,16 @@ export interface ForecastDay {
   high: number;
   low: number;
   description: string;
-  precipitation_chance: string;
 }
 
 export interface Discovery {
-  id: number;
-  title: string;
-  description: string;
-  date: string;
-  category: string;
+  google_maps_url: string;
+  youtube_travel_url: string;
 }
 
 export interface WeatherState {
   current: WeatherReport | null;
+  discovery: Discovery | null;
   history: WeatherReport[];
   loading: boolean;
   error: string | null;

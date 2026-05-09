@@ -7,6 +7,7 @@ import { apiClient } from "@/lib/apiClient";
 export const useWeather = () => {
   const [state, setState] = useState<WeatherState>({
     current: null,
+    discovery: null,
     history: [],
     loading: false,
     error: null,

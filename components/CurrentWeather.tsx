@@ -41,10 +41,11 @@ export const CurrentWeather: React.FC<CurrentWeatherProps> = ({ data }) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-8 border-t border-white/5 pt-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 border-t border-white/5 pt-8">
           <DetailItem label="Humidity" value={`${data.humidity}%`} color="text-secondary" />
-          <DetailItem label="Wind Speed" value={`${data.wind_speed} mph`} color="text-primary" />
-          <DetailItem label="UV Index" value="6 High" color="text-tertiary" />
+          <DetailItem label="Wind Speed" value={`${data.wind_speed} m/s`} color="text-primary" />
+          <DetailItem label="Pressure" value={`${data.pressure} hPa`} color="text-tertiary" />
+          <DetailItem label="Visibility" value={`${(data.visibility || 0) / 1000} km`} color="text-secondary" />
         </div>
       </div>
     </div>

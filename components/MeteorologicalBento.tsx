@@ -57,19 +57,33 @@ export const MeteorologicalBento: React.FC<MeteorologicalBentoProps> = ({ data }
         </div>
       </div>
 
-      {/* Visibility & Pressure Mini Grid */}
+      {/* Visibility & Pressure & Humidity Mini Grid */}
       <div className="grid grid-cols-2 gap-4">
         <div className="glass-card rounded-3xl p-6 border border-white/5">
           <span className="text-[9px] font-bold text-on-surface-variant mb-3 block tracking-widest uppercase">Visibility</span>
-          <span className="text-2xl font-bold text-on-surface">{((data.visibility ?? 0) / 1000).toFixed(1)} <span className="text-xs font-medium text-on-surface-variant">km</span></span>
+          <span className="text-2xl font-bold text-on-surface">{((data.visibility ?? 10000) / 1000).toFixed(1)} <span className="text-xs font-medium text-on-surface-variant">km</span></span>
           <p className="text-[9px] text-secondary mt-3 font-bold uppercase tracking-tighter">
-            {(data.visibility ?? 0) > 5000 ? "Clear" : "Reduced"}
+            {(data.visibility ?? 10000) > 5000 ? "Clear" : "Reduced"}
           </p>
         </div>
         <div className="glass-card rounded-3xl p-6 border border-white/5">
           <span className="text-[9px] font-bold text-on-surface-variant mb-3 block tracking-widest uppercase">Pressure</span>
           <span className="text-2xl font-bold text-on-surface">{data.pressure ?? "---"} <span className="text-xs font-medium text-on-surface-variant">hPa</span></span>
-          <p className="text-[9px] text-secondary mt-3 font-bold uppercase tracking-tighter">Steady</p>
+          <p className="text-[9px] text-secondary mt-3 font-bold uppercase tracking-tighter">
+            {(data.pressure ?? 1013) > 1020 ? "High" : (data.pressure ?? 1013) < 1000 ? "Low" : "Steady"}
+          </p>
+        </div>
+        <div className="glass-card rounded-3xl p-6 border border-white/5">
+          <span className="text-[9px] font-bold text-on-surface-variant mb-3 block tracking-widest uppercase">Humidity</span>
+          <span className="text-2xl font-bold text-on-surface">{data.humidity}<span className="text-xs font-medium text-on-surface-variant">%</span></span>
+          <div className="h-1 bg-surface-container-highest/30 rounded-full mt-3 overflow-hidden">
+            <div className="h-full bg-primary transition-all duration-1000" style={{ width: `${data.humidity}%` }}></div>
+          </div>
+        </div>
+        <div className="glass-card rounded-3xl p-6 border border-white/5">
+          <span className="text-[9px] font-bold text-on-surface-variant mb-3 block tracking-widest uppercase">Dew Point</span>
+          <span className="text-2xl font-bold text-on-surface">{Math.round(data.temperature - ((100 - data.humidity) / 5))}<span className="text-xs font-medium text-on-surface-variant">°</span></span>
+          <p className="text-[9px] text-on-surface-variant mt-3 font-medium uppercase tracking-tighter">Calculated</p>
         </div>
       </div>
     </aside>

@@ -16,17 +16,14 @@ const getIcon = (description: string) => {
   return <Cloud className="text-on-surface-variant" size={32} />;
 };
 
-
 export const Forecast: React.FC<ForecastProps> = ({ data }) => {
   if (!data || data.length === 0) return null;
   const forecastDays = data;
-
 
   return (
     <section className="space-y-6">
       <div className="flex justify-between items-center px-2">
         <h3 className="text-2xl font-bold text-on-surface">5-Day Outlook</h3>
-        <button className="text-[10px] font-bold tracking-widest text-primary uppercase hover:underline">View 10-Day Detail</button>
       </div>
       
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">

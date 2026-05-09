@@ -6,7 +6,6 @@ import { AlertCircle, Map, Play, ArrowUpRight } from "lucide-react";
 import { Forecast } from "@/components/Forecast";
 import { HistoryTable } from "@/components/HistoryTable";
 import { MeteorologicalBento } from "@/components/MeteorologicalBento";
-import { AtmosphericDetails } from "@/components/AtmosphericDetails";
 import { HourlyTrend } from "@/components/HourlyTrend";
 import { Footer } from "@/components/Footer";
 import { useWeatherContext } from "@/context/WeatherContext";
@@ -103,15 +102,6 @@ export default function Dashboard() {
               <HourlyTrend data={current} />
             </div>
             <MeteorologicalBento data={current} />
-          </div>
-
-          {/* Atmospheric Composition */}
-          <div className="space-y-6">
-            <div className="px-2">
-              <h3 className="text-2xl font-bold text-on-surface">Atmospheric Composition</h3>
-              <p className="text-on-surface-variant text-xs mt-1">Real-time analysis of humidity, visibility, and pressure gradients.</p>
-            </div>
-            <AtmosphericDetails data={current} />
           </div>
 
           {/* Outlook Section */}

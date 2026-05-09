@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎨 Weather Frontend - Atmospheric AI
 
-## Getting Started
+A production-grade, single-page weather dashboard built with Next.js. It features a high-density, data-driven interface designed to provide meteorological precision with a premium "Glassmorphism" aesthetic.
 
-First, run the development server:
+## 🌟 Features
+- **Dynamic Precision Modeling**: Custom-built SVG charts that visualize real-time temperature trends with Bézier curves.
+- **Meteorological Bento Grid**: High-density metrics layout consolidating Humidity, Dew Point, Pressure, and Visibility.
+- **Global Search System**: Predictive search bar supporting city names, zip codes, and coordinates with time-range persistence.
+- **Responsive "Fit" Layout**: Optimized for high-resolution screens with centered navigation and fluid components.
+- **Glassmorphism UI**: Uses backdrop filters and translucent layers for a modern, sleek appearance.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
+- **Framework**: Next.js 16.2 (App Router)
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **State Management**: React Context API
+- **Animations**: CSS Transitions / Framer-like micro-interactions
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Configure Backend**:
+   Ensure the FastAPI backend is running on `http://localhost:8000`.
 
-## Learn More
+3. **Development Mode**:
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Production Build**:
+   ```bash
+   npm run build
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📂 Project Structure
+- `app/`: Next.js App Router and global layout.
+- `components/`: Modular UI components (Navbar, HourlyTrend, MeteorologicalBento).
+- `context/`: WeatherContext for unified data fetching and state sync.
+- `types/`: TypeScript interfaces for backend data synchronization.

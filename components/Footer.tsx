@@ -19,7 +19,7 @@ export const Footer = () => {
           <p className="text-[11px] text-on-surface-variant/70 leading-relaxed">
             The Product Manager Accelerator program is designed to support PM professionals through every stage of their career. From landing your first PM role to scaling your impact as a Product Leader, we provide the mentorship, training, and community you need to succeed.
           </p>
-          <a href="https://www.linkedin.com/company/product-manager-accelerator" target="_blank" className="text-[10px] text-primary font-bold hover:underline mt-2 inline-block">Learn more on LinkedIn</a>
+          <a href="https://www.linkedin.com/school/pmaccelerator/posts/?feedView=all" target="_blank" className="text-[10px] text-primary font-bold hover:underline mt-2 inline-block">Learn more on LinkedIn</a>
         </div>
       </div>
     </footer>

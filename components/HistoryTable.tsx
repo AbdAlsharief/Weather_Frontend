@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Download, MapPin, Trash2, Edit } from "lucide-react";
 import { useWeatherContext } from "@/context/WeatherContext";
 import { BASE_URL } from "@/lib/apiClient";
@@ -12,18 +12,28 @@ interface HistoryTableProps {
 
 export const HistoryTable = ({ history }: HistoryTableProps) => {
   const { deleteHistory, updateHistory } = useWeatherContext();
+  const [mounted, setMounted] = useState(false);
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section className="space-y-6">
       <div className="flex justify-between items-end px-2">
         <h3 className="text-2xl font-bold text-on-surface">Your Search History</h3>
         <div className="flex gap-2">
-          <a href={`${BASE_URL}/export/csv`} className="bg-surface-container-high hover:bg-surface-container-highest text-primary font-bold text-[10px] tracking-widest uppercase px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all border border-white/5 shadow-xl">
+          <a 
+            href={mounted ? `${BASE_URL}/export/csv` : "#"} 
+            className="bg-surface-container-high hover:bg-surface-container-highest text-primary font-bold text-[10px] tracking-widest uppercase px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all border border-white/5 shadow-xl"
+          >
             <Download size={14} />
             CSV
           </a>
-          <a href={`${BASE_URL}/export/json`} className="bg-surface-container-high hover:bg-surface-container-highest text-secondary font-bold text-[10px] tracking-widest uppercase px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all border border-white/5 shadow-xl">
+          <a 
+            href={mounted ? `${BASE_URL}/export/json` : "#"} 
+            className="bg-surface-container-high hover:bg-surface-container-highest text-secondary font-bold text-[10px] tracking-widest uppercase px-4 py-2.5 rounded-xl flex items-center gap-2 transition-all border border-white/5 shadow-xl"
+          >
             <Download size={14} />
             JSON
           </a>
